@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aimall.mappers.StatisticsInfoMapper">
+
+    <!--瀹炰綋鏄犲皠-->
+    <resultMap id="base_result_map" type="com.aimall.entity.po.StatisticsInfo">
+        <!--鏃ユ湡-->
+        <result column="statistics_date" property="statisticsDate"/>
+        <!--鏁版嵁绫诲瀷-->
+        <result column="data_type" property="dataType"/>
+        <!--缁熻鏁版嵁-->
+        <result column="data_value" property="dataValue"/>
+    </resultMap>
+
+
+    <!-- 閫氱敤鏌ヨ缁撴灉鍒?->
+    <sql id="base_column_list">
+        s.statistics_date,s.data_type,s.data_value
+    </sql>
+
+    <sql id="base_condition_filed">
+        <if test="query.statisticsDate != null and query.statisticsDate!=''">
+            and s.statistics_date = #{query.statisticsDate}
+        </if>
+        <if test="query.dataType != null">
+            and s.data_type = #{query.dataType}
+        </if>
+        <if test="query.dataValue != null">
+            and s.data_value = #{query.dataValue}
+        </if>
+
+    </sql>
+
+    <!-- 閫氱敤鏌ヨ鏉′欢鍒?->
+    <sql id="query_condition">
+        <where>
+            <include refid="base_condition_filed"/>
+            <if test="query.statisticsDateFuzzy!= null  and query.statisticsDateFuzzy!=''">
+                and s.statistics_date like concat('%', #{query.statisticsDateFuzzy}, '%')
+            </if>
+            <if test="query.statisticsDateStart!= null and query.statisticsDateStart!=''">
+                <![CDATA[ and  s.statistics_date>=#{query.statisticsDateStart} ]]>
+            </if>
+            <if test="query.statisticsDateEnd!= null and query.statisticsDateEnd!=''">
+                <![CDATA[ and  s.statistics_date<= #{query.statisticsDateEnd} ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!-- 鏌ヨ闆嗗悎-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM statistics_info s
+        <include refid="query_condition"/>
+        <if test="query.orderBy!=null">
+            order by ${query.orderBy}
+        </if>
+        <if test="query.simplePage!=null">
+            limit #{query.simplePage.start},#{query.simplePage.end}
+        </if>
+    </select>
+
+    <!-- 鏌ヨ鏁伴噺-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM statistics_info s
+        <include refid="query_condition"/>
+    </select>
+
+    <!-- 鎻掑叆 锛堝尮閰嶆湁鍊肩殑瀛楁锛?->
+    <insert id="insert" parameterType="com.aimall.entity.po.StatisticsInfo">
+        INSERT INTO statistics_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.statisticsDate != null">
+                statistics_date,
+            </if>
+            <if test="bean.dataType != null">
+                data_type,
+            </if>
+            <if test="bean.dataValue != null">
+                data_value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.statisticsDate!=null">
+                #{bean.statisticsDate},
+            </if>
+            <if test="bean.dataType!=null">
+                #{bean.dataType},
+            </if>
+            <if test="bean.dataValue!=null">
+                #{bean.dataValue},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 鎻掑叆鎴栬€呮洿鏂?锛堝尮閰嶆湁鍊肩殑瀛楁锛?->
+    <insert id="insertOrUpdate" parameterType="com.aimall.entity.po.StatisticsInfo">
+        INSERT INTO statistics_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.statisticsDate != null">
+                statistics_date,
+            </if>
+            <if test="bean.dataType != null">
+                data_type,
+            </if>
+            <if test="bean.dataValue != null">
+                data_value,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.statisticsDate!=null">
+                #{bean.statisticsDate},
+            </if>
+            <if test="bean.dataType!=null">
+                #{bean.dataType},
+            </if>
+            <if test="bean.dataValue!=null">
+                #{bean.dataValue},
+            </if>
+        </trim>
+        on DUPLICATE key update
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="bean.statisticsDate!=null">
+                statistics_date = VALUES(statistics_date),
+            </if>
+            <if test="bean.dataType!=null">
+                data_type = VALUES(data_type),
+            </if>
+            <if test="bean.dataValue!=null">
+                data_value = VALUES(data_value),
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 娣诲姞 锛堟壒閲忔彃鍏ワ級-->
+    <insert id="insertBatch" parameterType="com.aimall.entity.po.StatisticsInfo">
+        INSERT INTO statistics_info(
+        statistics_date,
+        data_type,
+        data_value
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.statisticsDate},
+            #{item.dataType},
+            #{item.dataValue}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 鎵归噺鏂板淇敼 锛堟壒閲忔彃鍏ワ級-->
+    <insert id="insertOrUpdateBatch" parameterType="com.aimall.entity.po.StatisticsInfo">
+        INSERT INTO statistics_info(
+        statistics_date,
+        data_type,
+        data_value
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.statisticsDate},
+            #{item.dataType},
+            #{item.dataValue}
+            )
+        </foreach>
+        on DUPLICATE key update
+        statistics_date = VALUES(statistics_date),
+        data_type = VALUES(data_type),
+        data_value = VALUES(data_value)
+    </insert>
+
+    <!--澶氭潯浠朵慨鏀?->
+    <update id="updateByParam" parameterType="com.aimall.entity.query.StatisticsInfoQuery">
+        UPDATE statistics_info s
+        <set>
+            <if test="bean.statisticsDate != null">
+                statistics_date = #{bean.statisticsDate},
+            </if>
+            <if test="bean.dataType != null">
+                data_type = #{bean.dataType},
+            </if>
+            <if test="bean.dataValue != null">
+                data_value = #{bean.dataValue},
+            </if>
+        </set>
+        <include refid="query_condition"/>
+    </update>
+
+    <!--澶氭潯浠跺垹闄?->
+    <delete id="deleteByParam">
+        delete s from statistics_info s
+        <include refid="query_condition"/>
+    </delete>
+
+    <!-- 鏍规嵁StatisticsDateAndDataType淇敼-->
+    <update id="updateByStatisticsDateAndDataType" parameterType="com.aimall.entity.po.StatisticsInfo">
+        UPDATE statistics_info
+        <set>
+            <if test="bean.dataValue != null">
+                data_value = #{bean.dataValue},
+            </if>
+        </set>
+        where statistics_date=#{statisticsDate} and data_type=#{dataType}
+    </update>
+
+    <!-- 鏍规嵁StatisticsDateAndDataType鍒犻櫎-->
+    <delete id="deleteByStatisticsDateAndDataType">
+        delete from statistics_info where statistics_date=#{statisticsDate} and data_type=#{dataType}
+    </delete>
+
+    <!-- 鏍规嵁PrimaryKey鑾峰彇瀵硅薄-->
+    <select id="selectByStatisticsDateAndDataType" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from statistics_info s where statistics_date=#{statisticsDate} and data_type=#{dataType}
+    </select>
+
+</mapper>

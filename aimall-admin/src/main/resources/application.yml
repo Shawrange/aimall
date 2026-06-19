@@ -1,0 +1,42 @@
+server:
+  port: 6061
+  servlet:
+    context-path: /api
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  datasource:
+    url: ${AIMALL_DB_URL:jdbc:mysql://localhost:3306/aimall?allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8}
+    username: ${AIMALL_DB_USERNAME:}
+    password: ${AIMALL_DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  task:
+    scheduling:
+      pool:
+        size: 5
+  data:
+    redis:
+      host: ${AIMALL_REDIS_HOST:127.0.0.1}
+      port: ${AIMALL_REDIS_PORT:6379}
+  elasticsearch:
+    uris: ${AIMALL_ELASTICSEARCH_URIS:http://localhost:9200}
+    username: ${AIMALL_ELASTICSEARCH_USERNAME:}
+    password: ${AIMALL_ELASTICSEARCH_PASSWORD:}
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+project:
+  folder: ${AIMALL_PROJECT_FOLDER:c:/webser/web_app/aimall/}
+
+admin:
+  account: ${AIMALL_ADMIN_ACCOUNT:}
+  password: ${AIMALL_ADMIN_PASSWORD:}
+
+log:
+  root:
+    level: debug

@@ -1,0 +1,110 @@
+﻿package com.aimall.controller;
+
+import com.aimall.constants.Constants;
+import com.aimall.entity.enums.DateTimePatternEnum;
+import com.aimall.entity.enums.OrderStatusEnum;
+import com.aimall.entity.query.OrderInfoQuery;
+import com.aimall.entity.query.ProductSkuQuery;
+import com.aimall.entity.query.UserInfoQuery;
+import com.aimall.entity.vo.ResponseVO;
+import com.aimall.entity.vo.TodayDataVO;
+import com.aimall.service.ProductSkuService;
+import com.aimall.service.StatisticsInfoService;
+import com.aimall.service.UserInfoService;
+import com.aimall.service.impl.OrderInfoServiceImpl;
+import com.aimall.utils.DateUtil;
+import jakarta.annotation.Resource;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@RestController
+@RequestMapping("/home")
+@Validated
+public class HomeController extends ABaseController {
+
+    @Resource
+    private StatisticsInfoService statisticsInfoService;
+
+    @Resource
+    private OrderInfoServiceImpl orderInfoService;
+
+    @Resource
+    private ProductSkuService productSkuService;
+
+    @Resource
+    private UserInfoService userInfoService;
+
+    /**
+     * 鏌ヨ褰撳ぉ鏁版嵁
+     */
+    @RequestMapping("/getTodayData")
+    public ResponseVO getTodayData() {
+        List<TodayDataVO> result = new ArrayList<>();
+
+        String today = DateUtil.format(new Date(), DateTimePatternEnum.YYYY_MM_DD.getPattern());
+        String yesterday = DateUtil.getBeforeDay(1, DateTimePatternEnum.YYYY_MM_DD.getPattern());
+
+        //璁㈠崟閲戦
+        BigDecimal todayOrderAmount = orderInfoService.getOrderTotalAmount(today, new Integer[]{OrderStatusEnum.PAID.getStatus(),
+                OrderStatusEnum.SHIPPED.getStatus(), OrderStatusEnum.COMPLETED.getStatus()});
+        BigDecimal yesterdayOrderAmount = orderInfoService.getOrderTotalAmount(yesterday, new Integer[]{OrderStatusEnum.PAID.getStatus(),
+                OrderStatusEnum.SHIPPED.getStatus(), OrderStatusEnum.COMPLETED.getStatus()});
+        TodayDataVO orderAmountData = new TodayDataVO("orderAmount", todayOrderAmount, yesterdayOrderAmount);
+        result.add(orderAmountData);
+
+        //璁㈠崟鏁伴噺
+        OrderInfoQuery orderInfoQuery = new OrderInfoQuery();
+        orderInfoQuery.setOrderTime(today);
+        Integer todayOrderCount = orderInfoService.findCountByParam(orderInfoQuery);
+        orderInfoQuery.setOrderTime(yesterday);
+        Integer yesterdayOrderCount = orderInfoService.findCountByParam(orderInfoQuery);
+        TodayDataVO orderCountData = new TodayDataVO("orderCount", new BigDecimal(todayOrderCount), new BigDecimal(yesterdayOrderCount));
+        result.add(orderCountData);
+
+        //鐢ㄦ埛鏁伴噺
+        UserInfoQuery userInfoQuery = new UserInfoQuery();
+        userInfoQuery.setJoinTime(today);
+        Integer todayUserCount = userInfoService.findCountByParam(userInfoQuery);
+        userInfoQuery.setJoinTime(yesterday);
+        Integer yesterdayUserCount = userInfoService.findCountByParam(userInfoQuery);
+        TodayDataVO userCountData = new TodayDataVO("userCount", new BigDecimal(todayUserCount), new BigDecimal(yesterdayUserCount));
+        result.add(userCountData);
+
+        //閫€娆?
+        BigDecimal todayRefundAmount = orderInfoService.getOrderTotalAmount(today, new Integer[]{OrderStatusEnum.REFUNDED.getStatus()});
+        BigDecimal yesterdayRefundAmount = orderInfoService.getOrderTotalAmount(yesterday, new Integer[]{OrderStatusEnum.REFUNDED.getStatus()});
+        TodayDataVO refundAmountData = new TodayDataVO("refundAmount", todayRefundAmount, yesterdayRefundAmount);
+        result.add(refundAmountData);
+
+        return getSuccessResponseVO(result);
+    }
+
+    /**
+     * 鏌ヨ鏈€杩戜竴鍛ㄧ粺璁℃暟鎹?
+     *
+     * @return
+     */
+    @RequestMapping("/loadWeeklyStatisticsData")
+    public ResponseVO loadWeeklyStatisticsData() {
+        return getSuccessResponseVO(statisticsInfoService.loadWeeklyStatisticsData());
+    }
+
+    /**
+     * 搴撳瓨鍛婅鍟嗗搧
+     *
+     * @return
+     */
+    @RequestMapping("/loadLessStockProduct")
+    public ResponseVO loadLessStockProduct() {
+        ProductSkuQuery skuQuery = new ProductSkuQuery();
+        skuQuery.setLessStock(Constants.LENGTH_10);
+        return getSuccessResponseVO(productSkuService.findListByPage4ListVO(skuQuery));
+    }
+}
+

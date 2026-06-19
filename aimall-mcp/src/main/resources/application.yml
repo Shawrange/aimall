@@ -1,0 +1,47 @@
+server:
+  port: 8084
+  main:
+    web-application-type: reactive
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  datasource:
+    url: ${AIMALL_DB_URL:jdbc:mysql://localhost:3306/aimall?allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf8}
+    username: ${AIMALL_DB_USERNAME:}
+    password: ${AIMALL_DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  task:
+    scheduling:
+      pool:
+        size: 5
+  data:
+    redis:
+      host: ${AIMALL_REDIS_HOST:127.0.0.1}
+      port: ${AIMALL_REDIS_PORT:6379}
+  ai:
+    mcp:
+      server:
+        protocol: STREAMABLE
+        name: aimall-mcp
+        version: 1.0.0
+        streamable-http:
+          mcp-endpoint: /mcp
+          keep-alive-interval: 60s
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+project:
+  folder: ${AIMALL_PROJECT_FOLDER:c:/webser/web_app/aimall/}
+
+alipay:
+  appid: ${AIMALL_ALIPAY_APP_ID:}
+  appPrivateKey: ${AIMALL_ALIPAY_APP_PRIVATE_KEY:}
+  appCertPath: ${AIMALL_ALIPAY_APP_CERT_PATH:}
+  alipayPublicCertPath: ${AIMALL_ALIPAY_PUBLIC_CERT_PATH:}
+  alipayRootCertPath: ${AIMALL_ALIPAY_ROOT_CERT_PATH:}
+  serverUrl: ${AIMALL_ALIPAY_SERVER_URL:https://openapi-sandbox.dl.alipaydev.com/gateway.do}

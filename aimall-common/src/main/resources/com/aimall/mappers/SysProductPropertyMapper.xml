@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aimall.mappers.SysProductPropertyMapper">
+
+    <!--瀹炰綋鏄犲皠-->
+    <resultMap id="base_result_map" type="com.aimall.entity.po.SysProductProperty">
+        <!--灞炴€D-->
+        <result column="property_id" property="propertyId"/>
+        <!--灞炴€у悕绉?->
+        <result column="property_name" property="propertyName"/>
+        <!--涓€绾у垎绫?->
+        <result column="p_category_id" property="pCategoryId"/>
+        <!--浜岀骇鍒嗙被-->
+        <result column="category_id" property="categoryId"/>
+        <!--鎺掑簭-->
+        <result column="property_sort" property="propertySort"/>
+        <!--0:鏃犻渶浼犲皝闈?1:闇€浼犲皝闈?->
+        <result column="cover_type" property="coverType"/>
+    </resultMap>
+
+
+    <!-- 閫氱敤鏌ヨ缁撴灉鍒?->
+    <sql id="base_column_list">
+        s.property_id,s.property_name,s.p_category_id,s.category_id,s.property_sort,
+        s.cover_type
+    </sql>
+
+    <sql id="base_condition_filed">
+        <if test="query.propertyId != null and query.propertyId!=''">
+            and s.property_id = #{query.propertyId}
+        </if>
+        <if test="query.propertyName != null and query.propertyName!=''">
+            and s.property_name = #{query.propertyName}
+        </if>
+        <if test="query.pCategoryId != null and query.pCategoryId!=''">
+            and s.p_category_id = #{query.pCategoryId}
+        </if>
+        <if test="query.categoryId != null and query.categoryId!=''">
+            and s.category_id = #{query.categoryId}
+        </if>
+        <if test="query.propertySort != null">
+            and s.property_sort = #{query.propertySort}
+        </if>
+        <if test="query.coverType != null">
+            and s.cover_type = #{query.coverType}
+        </if>
+    </sql>
+
+    <!-- 閫氱敤鏌ヨ鏉′欢鍒?->
+    <sql id="query_condition">
+        <where>
+            <include refid="base_condition_filed"/>
+            <if test="query.propertyIdFuzzy!= null  and query.propertyIdFuzzy!=''">
+                and s.property_id like concat('%', #{query.propertyIdFuzzy}, '%')
+            </if>
+            <if test="query.propertyNameFuzzy!= null  and query.propertyNameFuzzy!=''">
+                and s.property_name like concat('%', #{query.propertyNameFuzzy}, '%')
+            </if>
+            <if test="query.pCategoryIdFuzzy!= null  and query.pCategoryIdFuzzy!=''">
+                and s.p_category_id like concat('%', #{query.pCategoryIdFuzzy}, '%')
+            </if>
+            <if test="query.categoryIdFuzzy!= null  and query.categoryIdFuzzy!=''">
+                and s.category_id like concat('%', #{query.categoryIdFuzzy}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 鏌ヨ闆嗗悎-->
+    <select id="selectList" resultMap="base_result_map">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM sys_product_property s
+        <include refid="query_condition"/>
+        <if test="query.orderBy!=null">
+            order by ${query.orderBy}
+        </if>
+        <if test="query.simplePage!=null">
+            limit #{query.simplePage.start},#{query.simplePage.end}
+        </if>
+    </select>
+
+    <!-- 鏌ヨ鏁伴噺-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_product_property s
+        <include refid="query_condition"/>
+    </select>
+
+    <!-- 鎻掑叆 锛堝尮閰嶆湁鍊肩殑瀛楁锛?->
+    <insert id="insert" parameterType="com.aimall.entity.po.SysProductProperty">
+        INSERT INTO sys_product_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.propertyId != null">
+                property_id,
+            </if>
+            <if test="bean.propertyName != null">
+                property_name,
+            </if>
+            <if test="bean.pCategoryId != null">
+                p_category_id,
+            </if>
+            <if test="bean.categoryId != null">
+                category_id,
+            </if>
+            <if test="bean.propertySort != null">
+                property_sort,
+            </if>
+            <if test="bean.coverType != null">
+                cover_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.propertyId!=null">
+                #{bean.propertyId},
+            </if>
+            <if test="bean.propertyName!=null">
+                #{bean.propertyName},
+            </if>
+            <if test="bean.pCategoryId!=null">
+                #{bean.pCategoryId},
+            </if>
+            <if test="bean.categoryId!=null">
+                #{bean.categoryId},
+            </if>
+            <if test="bean.propertySort!=null">
+                #{bean.propertySort},
+            </if>
+            <if test="bean.coverType!=null">
+                #{bean.coverType},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 鎻掑叆鎴栬€呮洿鏂?锛堝尮閰嶆湁鍊肩殑瀛楁锛?->
+    <insert id="insertOrUpdate" parameterType="com.aimall.entity.po.SysProductProperty">
+        INSERT INTO sys_product_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bean.propertyId != null">
+                property_id,
+            </if>
+            <if test="bean.propertyName != null">
+                property_name,
+            </if>
+            <if test="bean.pCategoryId != null">
+                p_category_id,
+            </if>
+            <if test="bean.categoryId != null">
+                category_id,
+            </if>
+            <if test="bean.propertySort != null">
+                property_sort,
+            </if>
+            <if test="bean.coverType != null">
+                cover_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bean.propertyId!=null">
+                #{bean.propertyId},
+            </if>
+            <if test="bean.propertyName!=null">
+                #{bean.propertyName},
+            </if>
+            <if test="bean.pCategoryId!=null">
+                #{bean.pCategoryId},
+            </if>
+            <if test="bean.categoryId!=null">
+                #{bean.categoryId},
+            </if>
+            <if test="bean.propertySort!=null">
+                #{bean.propertySort},
+            </if>
+            <if test="bean.coverType!=null">
+                #{bean.coverType},
+            </if>
+        </trim>
+        on DUPLICATE key update
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="bean.propertyId!=null">
+                property_id = VALUES(property_id),
+            </if>
+            <if test="bean.propertyName!=null">
+                property_name = VALUES(property_name),
+            </if>
+            <if test="bean.pCategoryId!=null">
+                p_category_id = VALUES(p_category_id),
+            </if>
+            <if test="bean.categoryId!=null">
+                category_id = VALUES(category_id),
+            </if>
+            <if test="bean.propertySort!=null">
+                property_sort = VALUES(property_sort),
+            </if>
+            <if test="bean.coverType!=null">
+                cover_type = VALUES(cover_type),
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 娣诲姞 锛堟壒閲忔彃鍏ワ級-->
+    <insert id="insertBatch" parameterType="com.aimall.entity.po.SysProductProperty">
+        INSERT INTO sys_product_property(
+        property_id,
+        property_name,
+        p_category_id,
+        category_id,
+        property_sort,
+        cover_type
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.propertyId},
+            #{item.propertyName},
+            #{item.pCategoryId},
+            #{item.categoryId},
+            #{item.propertySort},
+            #{item.coverType}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 鎵归噺鏂板淇敼 锛堟壒閲忔彃鍏ワ級-->
+    <insert id="insertOrUpdateBatch" parameterType="com.aimall.entity.po.SysProductProperty">
+        INSERT INTO sys_product_property(
+        property_id,
+        property_name,
+        p_category_id,
+        category_id,
+        property_sort,
+        cover_type
+        )values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.propertyId},
+            #{item.propertyName},
+            #{item.pCategoryId},
+            #{item.categoryId},
+            #{item.propertySort},
+            #{item.coverType}
+            )
+        </foreach>
+        on DUPLICATE key update
+        property_id = VALUES(property_id),
+        property_name = VALUES(property_name),
+        p_category_id = VALUES(p_category_id),
+        category_id = VALUES(category_id),
+        property_sort = VALUES(property_sort),
+        cover_type = VALUES(cover_type)
+    </insert>
+
+    <!--澶氭潯浠朵慨鏀?->
+    <update id="updateByParam" parameterType="com.aimall.entity.query.SysProductPropertyQuery">
+        UPDATE sys_product_property s
+        <set>
+            <if test="bean.propertyId != null">
+                property_id = #{bean.propertyId},
+            </if>
+            <if test="bean.propertyName != null">
+                property_name = #{bean.propertyName},
+            </if>
+            <if test="bean.pCategoryId != null">
+                p_category_id = #{bean.pCategoryId},
+            </if>
+            <if test="bean.categoryId != null">
+                category_id = #{bean.categoryId},
+            </if>
+            <if test="bean.propertySort != null">
+                property_sort = #{bean.propertySort},
+            </if>
+            <if test="bean.coverType != null">
+                cover_type = #{bean.coverType},
+            </if>
+        </set>
+        <include refid="query_condition"/>
+    </update>
+
+    <!--澶氭潯浠跺垹闄?->
+    <delete id="deleteByParam">
+        delete s from sys_product_property s
+        <include refid="query_condition"/>
+    </delete>
+
+    <!-- 鏍规嵁PropertyId淇敼-->
+    <update id="updateByPropertyId" parameterType="com.aimall.entity.po.SysProductProperty">
+        UPDATE sys_product_property
+        <set>
+            <if test="bean.propertyName != null">
+                property_name = #{bean.propertyName},
+            </if>
+            <if test="bean.pCategoryId != null">
+                p_category_id = #{bean.pCategoryId},
+            </if>
+            <if test="bean.categoryId != null">
+                category_id = #{bean.categoryId},
+            </if>
+            <if test="bean.propertySort != null">
+                property_sort = #{bean.propertySort},
+            </if>
+            <if test="bean.coverType != null">
+                cover_type = #{bean.coverType},
+            </if>
+        </set>
+        where property_id=#{propertyId}
+    </update>
+
+    <!-- 鏍规嵁PropertyId鍒犻櫎-->
+    <delete id="deleteByPropertyId">
+        delete from sys_product_property where property_id=#{propertyId}
+    </delete>
+
+    <!-- 鏍规嵁PrimaryKey鑾峰彇瀵硅薄-->
+    <select id="selectByPropertyId" resultMap="base_result_map">
+        select
+        <include refid="base_column_list"/>
+        from sys_product_property s where property_id=#{propertyId}
+    </select>
+
+    <select id="selectMaxSort" resultType="java.lang.Integer">
+        select ifnull(max(property_sort),0) from sys_product_property where category_id=#{categoryId}
+    </select>
+</mapper>

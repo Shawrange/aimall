@@ -1,0 +1,34 @@
+﻿package com.aimall.interceptor;
+
+import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
+
+@Configuration
+public class WebAppConfigurer implements WebMvcConfigurer {
+
+    @Resource
+    private AppInterceptor appInterceptor;
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(appInterceptor).addPathPatterns("/**");
+    }
+
+    /**
+     * 閰嶇疆闈欐€佽祫婧?
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    }
+}
