@@ -1,0 +1,14 @@
+spring:
+  main:
+    web-application-type: none
+  ai:
+    vectorstore:
+      elasticsearch:
+        initialize-schema: true
+        index-name: ${rag.eval.index-name:aimall-rag-eval-vectorstore}
+        dimensions: ${rag.eval.dimensions:1024}
+logging:
+  level:
+    root: info
+    org.apache.http: warn
+    org.elasticsearch.client: warn

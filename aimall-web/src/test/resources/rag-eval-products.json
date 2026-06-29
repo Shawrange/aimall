@@ -1,0 +1,106 @@
+{
+  "products": [
+    {
+      "productId": "eval-product-phone-gaming",
+      "productName": "星河 X9 游戏手机",
+      "content": "商品名称：星河 X9 游戏手机。核心卖点：高刷新率 AMOLED 屏幕，骁龙旗舰芯片，散热背夹套装，适合手游、直播和高性能使用。属性：12GB 内存，256GB 存储，黑色。"
+    },
+    {
+      "productId": "eval-product-phone-elder",
+      "productName": "安心大字老人手机",
+      "content": "商品名称：安心大字老人手机。核心卖点：大音量，大字体，长续航，一键 SOS，适合老人日常通话和紧急联系。属性：实体按键，红色，待机时间长。"
+    },
+    {
+      "productId": "eval-product-earbuds-student",
+      "productName": "轻语 T3 学生蓝牙耳机",
+      "content": "商品名称：轻语 T3 学生蓝牙耳机。核心卖点：价格实惠，佩戴轻便，降噪通话，适合学生上课、通勤、听网课和运动。属性：入耳式，白色，续航 30 小时。"
+    },
+    {
+      "productId": "eval-product-earbuds-noise-cancel",
+      "productName": "静界 Pro 主动降噪耳机",
+      "content": "商品名称：静界 Pro 主动降噪耳机。核心卖点：主动降噪，通勤降噪，地铁飞机降噪，高清麦克风。属性：真无线，黑色，支持透明模式。"
+    },
+    {
+      "productId": "eval-product-shoes-men-running",
+      "productName": "疾风 男士缓震跑鞋",
+      "content": "商品名称：疾风 男士缓震跑鞋。核心卖点：轻量透气，缓震回弹，适合男士跑步、健身和日常训练。属性：男款，黑白配色，橡胶防滑鞋底。"
+    },
+    {
+      "productId": "eval-product-shoes-women-walking",
+      "productName": "云步 女士休闲健步鞋",
+      "content": "商品名称：云步 女士休闲健步鞋。核心卖点：软底舒适，长时间走路不累，适合女士通勤、散步和旅行。属性：女款，米白色，轻便鞋面。"
+    },
+    {
+      "productId": "eval-product-laptop-office",
+      "productName": "青云 Air 14 办公笔记本",
+      "content": "商品名称：青云 Air 14 办公笔记本。核心卖点：轻薄便携，长续航，适合办公、写文档、在线会议和学习。属性：14 英寸，16GB 内存，512GB SSD。"
+    },
+    {
+      "productId": "eval-product-laptop-gaming",
+      "productName": "战刃 16 电竞游戏本",
+      "content": "商品名称：战刃 16 电竞游戏本。核心卖点：独立显卡，高性能处理器，高刷新率屏幕，适合大型游戏、视频剪辑和 3D 建模。属性：16 英寸，RTX 显卡，RGB 键盘。"
+    },
+    {
+      "productId": "eval-product-bag-commute",
+      "productName": "森旅 商务通勤双肩包",
+      "content": "商品名称：森旅 商务通勤双肩包。核心卖点：电脑隔层，防泼水，大容量，适合上班族装笔记本电脑和文件。属性：黑色，简约商务风。"
+    },
+    {
+      "productId": "eval-product-watch-sport",
+      "productName": "跃动 S2 运动智能手表",
+      "content": "商品名称：跃动 S2 运动智能手表。核心卖点：心率监测，睡眠记录，跑步骑行模式，适合运动健康管理。属性：防水，黑色表带，长续航。"
+    },
+    {
+      "productId": "eval-product-keyboard-mechanical",
+      "productName": "极客 K87 机械键盘",
+      "content": "商品名称：极客 K87 机械键盘。核心卖点：青轴机械手感，适合程序员打字、游戏和桌面办公。属性：87 键，白色背光，有线连接。"
+    },
+    {
+      "productId": "eval-product-mouse-ergonomic",
+      "productName": "舒腕 人体工学无线鼠标",
+      "content": "商品名称：舒腕 人体工学无线鼠标。核心卖点：垂直握持，减少手腕压力，适合长时间办公和设计。属性：无线，静音按键，灰色。"
+    }
+  ],
+  "cases": [
+    {
+      "query": "我想给上大学的弟弟买个耳机，别太贵，平时听网课通勤都能用的那种",
+      "expectedProductIds": ["eval-product-earbuds-student"]
+    },
+    {
+      "query": "每天坐地铁太吵了，有没有那种能把环境声压下去的无线耳机",
+      "expectedProductIds": ["eval-product-earbuds-noise-cancel"]
+    },
+    {
+      "query": "家里老人眼神不太好，想买个字大声音也大的手机，最好能一键求助",
+      "expectedProductIds": ["eval-product-phone-elder"]
+    },
+    {
+      "query": "最近打手游老是发烫卡顿，帮我找个性能强一点散热好的手机",
+      "expectedProductIds": ["eval-product-phone-gaming"]
+    },
+    {
+      "query": "我男朋友开始跑步健身了，想给他买双脚感软一点不容易滑的鞋",
+      "expectedProductIds": ["eval-product-shoes-men-running"]
+    },
+    {
+      "query": "下个月出去旅游，想找双女生穿的舒服鞋，走一天路也别太累",
+      "expectedProductIds": ["eval-product-shoes-women-walking"]
+    },
+    {
+      "query": "上班主要写文档开会，电脑想要轻一点，电池也耐用一点",
+      "expectedProductIds": ["eval-product-laptop-office"]
+    },
+    {
+      "query": "想换台笔记本，晚上玩游戏，偶尔还要剪视频，配置别太弱",
+      "expectedProductIds": ["eval-product-laptop-gaming"]
+    },
+    {
+      "query": "每天背电脑去公司，想要个能放笔记本、下雨也不太怕的双肩包",
+      "expectedProductIds": ["eval-product-bag-commute"]
+    },
+    {
+      "query": "我写代码时间比较长，想买个敲起来舒服一点的键盘，有没有推荐",
+      "expectedProductIds": ["eval-product-keyboard-mechanical"]
+    }
+  ]
+}
